@@ -1,3 +1,5 @@
+localStorage.clear()
+
 var aiPlayerEarnings = [];
 var aiPlayerPosition = [];
 var aiPlayerScore = [];
@@ -107,21 +109,21 @@ function edit()
     }
 }
 
-function existingTeams()
-{
-    for(let iCount = 1; iCount < 22; iCount++)
-    {
-        if(localStorage.getItem("team" + iCount) != "")
-        {
-            var sExistingTeams = localStorage.getItem("team" + iCount);
-            document.getElementById("teamOutput" + iCount).innerHTML = sExistingTeams;
-        }
-        else
-        {
-            document.getElementById("teamOutput" + iCount).innerHTML = "";
-        }
-    }
-}
+// function existingTeams()
+// {
+//     for(let iCount = 1; iCount < 22; iCount++)
+//     {
+//         if(localStorage.getItem("team" + iCount) != "")
+//         {
+//             var sExistingTeams = localStorage.getItem("team" + iCount);
+//             document.getElementById("teamOutput" + iCount).innerHTML = sExistingTeams;
+//         }
+//         else
+//         {
+//             document.getElementById("teamOutput" + iCount).innerHTML = "";
+//         }
+//     }
+// }
 
 function deleteTeam()
 {
@@ -149,7 +151,7 @@ function deleteTeam()
 
 function refresh()
 {
-    for(let iCount2 = 1; iCount2 < 21; iCount2++)
+    for(let iCount2 = 1; iCount2 < 30; iCount2++)
     {
         if(document.getElementById("teamOutput" + iCount2).innerHTML.length > 1)
         {
@@ -161,7 +163,7 @@ function refresh()
             var aiTeamEarnings = [];
             var iSum = 0;
     
-            for(let iCount1 = 1; iCount1 < 21; iCount1++)
+            for(let iCount1 = 1; iCount1 < 30; iCount1++)
             {
                     for(let iCount = 0; iCount < 5; iCount++)
                     {
@@ -180,7 +182,6 @@ function refresh()
                             sOutput += (iCount + 1) + ". " + sPlayerName[iCount] + "<br>";
                         }
         
-                        console.log(aiTeamPosition[iCount] = aiPlayerPosition.indexOf(sPlayerName[iCount]))
                         if(aiTeamPosition[iCount] = aiPlayerPosition.indexOf(sPlayerName[iCount]) == -1)
                         {
                             iSum += 7000
@@ -195,23 +196,61 @@ function refresh()
                             console.log(iSum);
                         } 
                     }
-                    
+
                     sOutput += "<br><br>Projected Team Earnings: $" + iSum.toLocaleString("en-US");
     
                     document.getElementById("teamOutput" + iCount2).innerHTML = sOutput;
                     localStorage.setItem("team" + iCount2, sOutput);
-        
-                    iCount1 = 21;
+                    iCount1 = 30;
             }
         }
     }
+
+    let aiTotalEarnings = [];
+    for(let iCounter = 1; iCounter < 30; iCounter++)
+    {
+        let iEarningsStart = (document.getElementById("teamOutput" + iCounter).innerHTML.indexOf("$")) + 1;
+        let iEarningsEnd = document.getElementById("teamOutput" + iCounter).innerHTML.length;
+        aiTotalEarnings[iCounter] = document.getElementById("teamOutput" + iCounter).innerHTML.slice(iEarningsStart, iEarningsEnd).replace(",","").replace(",","");
+        console.log(aiTotalEarnings[iCounter]);
+    }
+    
+    let sHoldTeamName;
+    let iHoldTeamAmount;
+    
+    for (let iOuter = 1; iOuter < aiTotalEarnings.length - 1; iOuter++)
+    {
+        console.log(aiTotalEarnings[iOuter]);
+        for (let iInner = iOuter + 1; iInner < aiTotalEarnings.length; iInner++)
+        {
+            console.log(aiTotalEarnings[iInner]);
+            if (aiTotalEarnings[iOuter] > aiTotalEarnings[iInner])
+            {
+                sHoldTeamName = document.getElementById("teamOutput" + iInner).innerHTML;
+                console.log(sHoldTeamName)
+                iHoldTeamAmount = aiTotalEarnings[iInner];
+                console.log(iHoldTeamAmount)
+    
+                sHoldTeamName = document.getElementById("teamOutput" + iOuter).innerHTML;
+                console.log(sHoldTeamName);
+                aiTotalEarnings[iInner] = aiTotalEarnings[iOuter];
+                console.log(aiTotalEarnings[iInner]);
+    
+                document.getElementById("teamOutput" + iInner).innerHTML = sHoldTeamName;
+                console.log(document.getElementById("teamOutput" + iInner).innerHTML);
+                aiTotalEarnings[iOuter] = iHoldTeamAmount;
+                console.log(aiTotalEarnings[iOuter]);
+            }
+        }
+    } 
+
     alert("You have succesfully refreshed all teams.")
 }
 
 
 
-    var n =  new Date();
-    var y = n.getFullYear();
-    var m = n.getMonth() + 1;
-    var d = n.getDate() - 1;
-    document.getElementById("d").innerHTML = m + "/" + d + "/" + y;
+var n =  new Date();
+var y = n.getFullYear();
+var m = n.getMonth() + 1;
+var d = n.getDate() - 1;
+document.getElementById("d").innerHTML = m + "/" + d + "/" + y;
