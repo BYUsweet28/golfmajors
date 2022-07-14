@@ -1,4 +1,4 @@
-// localStorage.clear()
+localStorage.clear()
 
 // var aiPlayerEarnings = [];
 // var aiPlayerPosition = [];
@@ -249,8 +249,8 @@
 
 
 
-// var n =  new Date();
-// var y = n.getFullYear();
-// var m = n.getMonth() + 1;
-// var d = n.getDate() - 1;
-// document.getElementById("d").innerHTML = m + "/" + d + "/" + y;
+var n =  new Date();
+var y = n.getFullYear();
+var m = n.getMonth() + 1;
+var d = n.getDate() - 1;
+document.getElementById("d").innerHTML = m + "/" + d + "/" + y;
