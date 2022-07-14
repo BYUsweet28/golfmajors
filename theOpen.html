@@ -51,8 +51,8 @@
                         <div class="card-body">
                             <div class="small text-muted">Picks due by 11:59 PM on Wednesday July 14.</div>
                             <h2 class="card-title"></h2>
-                            <p class="card-text">Build your team by clicking below:</p>
-                            <a class="btn btn-primary" onclick="teams()">Begin here</a>
+                            <p class="card-text">Check team standings below:</p>
+                            <a class="btn btn-primary" onclick="teams()" hidden>Begin here</a>
                         </div>
                     </div>
                     <!-- Nested row for non-featured blog posts-->
@@ -61,167 +61,471 @@
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 1</div>
-                                    <p class="card-text" id="teamOutput1"></p>
+                                    <div class="small text-muted">1st Place</div>
+                                    <p class="card-text" id="teamOutput1">
+                                        Max's Picks: <br><br>
+                                        1. Schauffele<br>
+                                        2. Cantlay<br>
+                                        3. Rahm<br>
+                                        4. Zalatoris<br>
+                                        5. C. Smith<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 2</div>
-                                    <p class="card-text" id="teamOutput2"></p>
+                                    <div class="small text-muted">2nd Place</div>
+                                    <p class="card-text" id="teamOutput2">
+                                        C. Ferguson (1)'s Picks: <br><br>
+                                        1. Cantlay<br>
+                                        2. Finau<br>
+                                        3. Fleetwood<br>
+                                        4. Kitayama<br>
+                                        5. Morikawa<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 3</div>
-                                    <p class="card-text" id="teamOutput3"></p>
+                                    <div class="small text-muted">3rd Place</div>
+                                    <p class="card-text" id="teamOutput3">
+                                        C. Ferguson (2)'s Picks: <br><br>
+                                        1. Schauffele<br>
+                                        2. Scheffler<br>
+                                        3. C. Smith<br>
+                                        4. Spieth<br>
+                                        5. Thomas<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 4</div>
+                                    <div class="small text-muted">4th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput4"></p>
+                                    <p class="card-text" id="teamOutput4">
+                                        C. Ferguson (3)'s Picks: <br><br>
+                                        1. Woods<br>
+                                        2. Fitzpatrick<br>
+                                        3. McIlroy<br>
+                                        4. Rahm<br>
+                                        5. Niemann<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 5</div>
+                                    <div class="small text-muted">5th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput5"></p>
+                                    <p class="card-text" id="teamOutput5">
+                                        M. Raeder (1)'s Picks: <br><br>
+                                        1. Thomas<br>
+                                        2. Zalatoris<br>
+                                        3. McIlroy<br>
+                                        4. Spieth<br>
+                                        5. Schauffele<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 6</div>
+                                    <div class="small text-muted">6th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput6"></p>
+                                    <p class="card-text" id="teamOutput6">
+                                        M. Raeder (2)'s Picks: <br><br>
+                                        1. Scheffler<br>
+                                        2. Zalatoris<br>
+                                        3. McIlroy<br>
+                                        4. Spieth<br>
+                                        5. Schauffele<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 7</div>
+                                    <div class="small text-muted">7th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput7"></p>
+                                    <p class="card-text" id="teamOutput7">
+                                        M. Raeder (3)'s Picks: <br><br>
+                                        1. Scheffler<br>
+                                        2. Fitzpatrick<br>
+                                        3. McIlroy<br>
+                                        4. Spieth<br>
+                                        5. Schauffele<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 8</div>
+                                    <div class="small text-muted">8th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput8"></p>
+                                    <p class="card-text" id="teamOutput8">
+                                        M. Raeder (4)'s Picks: <br><br>
+                                        1. Schauffele<br>
+                                        2. Spieth<br>
+                                        3. McIlroy<br>
+                                        4. Morikawa<br>
+                                        5. C. Smith<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>    
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 9</div>
+                                    <div class="small text-muted">9th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput9"></p>
+                                    <p class="card-text" id="teamOutput9">
+                                        M. Raeder (5)'s Picks: <br><br>
+                                        1. McIlroy<br>
+                                        2. Schauffele<br>
+                                        3. Thomas<br>
+                                        4. Zalatoris<br>
+                                        5. C. Smith<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 10</div>
+                                    <div class="small text-muted">10th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput10"></p>
+                                    <p class="card-text" id="teamOutput10">
+                                        O. Raeder's Picks: <br><br>
+                                        1. McIlroy<br>
+                                        2. Spieth<br>
+                                        3. Schauffele<br>
+                                        4. Morikawa<br>
+                                        5. Fitzpatrick<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 11</div>
+                                    <div class="small text-muted">11th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput11"></p>
+                                    <p class="card-text" id="teamOutput11">
+                                        Helen Raeder's Picks: <br><br>
+                                        1. McIlroy<br>
+                                        2. Spieth<br>
+                                        3. Schauffele<br>
+                                        4. Fitzpatrick<br>
+                                        5. Scheffler<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 12</div>
+                                    <div class="small text-muted">12th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput12"></p>
+                                    <p class="card-text" id="teamOutput12">
+                                        L. Raeder's Picks: <br><br>
+                                        1. McIlroy<br>
+                                        2. Spieth<br>
+                                        3. Schauffele<br>
+                                        4. Fitzpatrick<br>
+                                        5. Zalatoris<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 13</div>
+                                    <div class="small text-muted">13th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput13"></p>
+                                    <p class="card-text" id="teamOutput13">
+                                        Holly Raeder's Picks: <br><br>
+                                        1. McIlroy<br>
+                                        2. Spieth<br>
+                                        3. Schauffele<br>
+                                        4. Fitzpatrick<br>
+                                        5. Lowry<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 14</div>
+                                    <div class="small text-muted">14th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput14"></p>
+                                    <p class="card-text" id="teamOutput14">
+                                        R. Adams (1)'s Picks: <br><br>
+                                        1. McIlRoy<br>
+                                        2. Rahm<br>
+                                        3. Spieth<br>
+                                        4. Thomas<br>
+                                        5. Zalatoris<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 15</div>
+                                    <div class="small text-muted">15th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput15"></p>
+                                    <p class="card-text" id="teamOutput15">
+                                        R. Adams (2)'s Picks: <br><br>
+                                        1. Schauffele<br>
+                                        2. Scheffler<br>
+                                        3. Fitzpatrick<br>
+                                        4. Lowry<br>
+                                        5. C. Smith<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 16</div>
+                                    <div class="small text-muted">16th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput16"></p>
+                                    <p class="card-text" id="teamOutput16">
+                                        L. Cochran's Picks: <br><br>
+                                        1. McIlRoy<br>
+                                        2. Scheffler<br>
+                                        3. Rahm<br>
+                                        4. Hovland<br>
+                                        5. Zalatoris<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 17</div>
+                                    <div class="small text-muted">17th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput17"></p>
+                                    <p class="card-text" id="teamOutput17">
+                                        C. Smith's Picks: <br><br>
+                                        1. McIlroy<br>
+                                        2. D. Johnson<br>
+                                        3. Rahm<br>
+                                        4. Lowry<br>
+                                        5. Thomas<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 18</div>
+                                    <div class="small text-muted">18th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput18"></p>
+                                    <p class="card-text" id="teamOutput18">
+                                        Mike Sweet's Picks: <br><br>
+                                        1. McIlroy<br>
+                                        2. Fitzpatrick<br>
+                                        3. Rahm<br>
+                                        4. Schauffele<br>
+                                        5. Finau<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 19</div>
+                                    <div class="small text-muted">19th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput19"></p>
+                                    <p class="card-text" id="teamOutput19">
+                                        R. Loftis's Picks: <br><br>
+                                        1. McIlroy<br>
+                                        2. Homa<br>
+                                        3. Cantlay<br>
+                                        4. Zalatoris<br>
+                                        5. Lowry<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
                             </div>
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <div class="small text-muted">Team 20</div>
+                                    <div class="small text-muted">20th Place</div>
                                     <h2 class="card-title h4"></h2>
-                                    <p class="card-text" id="teamOutput20"></p>
+                                    <p class="card-text" id="teamOutput20">
+                                        K. Markwardt's Picks: <br><br>
+                                        1. McIlroy<br>
+                                        2. Spieth<br>
+                                        3. Rahm<br>
+                                        4. Fitzpatrick<br>
+                                        5. Schauffele<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
                                 </div>
-                            </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+                            </div>          
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">21st Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput21">
+                                        D. Ennenga's Picks: <br><br>
+                                        1. Matsuyama<br>
+                                        2. Im<br>
+                                        3. Na<br>
+                                        4. Lee<br>
+                                        5. Morikawa<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>      
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">22nd Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput22">
+                                        C. Puempel's Picks: <br><br>
+                                        1. McIlroy<br>
+                                        2. Schauffele<br>
+                                        3. Rahm<br>
+                                        4. Zalatoris<br>
+                                        5. Morikawa<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>     
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">23rd Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput23">
+                                        T. Ferguson's Picks: <br><br>
+                                        1. Spieth<br>
+                                        2. Cantlay<br>
+                                        3. Hatton<br>
+                                        4. Fitzpatrick<br>
+                                        5. C. Smith<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>       
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">24th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput24">
+                                        T. Johnson's Picks: <br><br>
+                                        1. McIlRoy<br>
+                                        2. Fleetwood<br>
+                                        3. Spieth<br>
+                                        4. Woods<br>
+                                        5. Fitzpatrick<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>      
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">25th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput25">
+                                        O. Puempel's Picks: <br><br>
+                                        1. Schauffele<br>
+                                        2. Matsuyama<br>
+                                        3. Rahm<br>
+                                        4. McIlroy<br>
+                                        5. Zalatoris<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>     
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">26th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput26">
+                                        M. Maples's Picks: <br><br>
+                                        1. McIlRoy<br>
+                                        2. Schauffele<br>
+                                        3. Matsuyama<br>
+                                        4. Fitzpatrick<br>
+                                        5. Spieth<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>    
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">27th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput27">
+                                        T. Blackwell's Picks: <br><br>
+                                        1. Spieth<br>
+                                        2. McIlroy<br>
+                                        3. Schauffele<br>
+                                        4. Zalatoris<br>
+                                        5. C. Smith<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>  
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">28th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput28">
+                                        D. Pino's Picks: <br><br>
+                                        1. Thomas<br>
+                                        2. McIlroy<br>
+                                        3. Schauffele<br>
+                                        4. Zalatoris<br>
+                                        5. C. Smith<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>    
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">29th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput29">
+                                        J. Sweet's Picks: <br><br>
+                                        1. Scheffler<br>
+                                        2. McIlroy<br>
+                                        3. Rahm<br>
+                                        4. Cantlay<br>
+                                        5. Schauffele<br><br><br>
+                                        Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>                                                                                                                                                                         
                         </div>
                         <a class="btn" onclick="edit()" id="teamOutput21"></a>
                         <div class="col-lg-7">
                             <div class="card mb-4">
                                 <div class="card-body">
-                                    <a class="btn btn-primary" id="delete" onclick="deleteTeam()">Delete a Team</a>
-                                    <a class="btn btn-primary" id="edit" onclick="edit()">Edit a Team</a>
+                                    <a class="btn btn-primary" id="delete" onclick="deleteTeam()" hidden>Delete a Team</a>
+                                    <a class="btn btn-primary" id="edit" onclick="edit()" hidden>Edit a Team</a>
                                     <a class="btn btn-primary" id="refresh" onclick="refresh()">Refresh Teams</a>
                                 </div>
                             </div>
@@ -243,7 +547,7 @@
                                         <tr>
                                             <td>1</td>
                                             <td id="score1"></td>
-                                            <td id="golfer1">The leaderboard will be updated</td>
+                                            <td id="golfer1">The standings will be updated</td>
                                             <td id="earnings1">2,500,000</td>
                                         </tr>
                                         <tr>
