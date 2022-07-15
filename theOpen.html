@@ -41,7 +41,7 @@
             </div>
         </header>
         <!-- Page content-->
-        <div class="container">
+        <div class="container-xxl">
             <div class="row">
                 <!-- Blog entries-->
                 <div class="col-lg-8">
@@ -55,9 +55,53 @@
                             <a class="btn btn-primary" onclick="teams()" hidden>Begin here</a>
                         </div>
                     </div>
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Categories widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Helpful Tools</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="https://sportsbook.draftkings.com/leagues/golf/88670577?wpsrc=Organic%20Search&wpaffn=Google&wpkw=https%3A%2F%2Fsportsbook.draftkings.com%2Fleagues%2Fgolf%2F88670577&wpcn=leagues&wpscn=golf%2F88670577" target="_blank">Betting Odds</a></li>
+                                        <li><a href="https://www.theopen.com/" target="_blank">Official Website</a></li>
+                                        <li><a href="https://www.theopen.com/teetimes" target="_blank">Tee Times</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="https://www.pgatour.com/players.html" target="_blank">List of Golfers</a></li>
+                                        <li><a href="https://www.pgatour.com/fedexcup/official-standings.html" target="_blank">FedEx Cup Standings</a></li>
+                                        <li><a href="https://www.pgatour.com/stats/stat.186.html" target="_blank">World Golf Rankings</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Side widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Keep in Mind:</div>
+                        <div class="card-body">
+                            <ul>
+                                <li>You can pick up to 5 players</li>
+                                <li>The goal is to maximize your team's earnings</li>
+
+                                <li>The leaderboard will be updated every night at midnight</li>
+                                <li>$10 entry fee per team</li>
+                                <li>1st place team wins 70% of total pot</li>
+                                <li>2nd place team wins 20% of total pot</li>
+                                <li>3rd place team wins 10% of total pot</li>
+                                <li>All ties split winnings equally</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
                     <!-- Nested row for non-featured blog posts-->
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             <!-- Blog post-->
                             <div class="card mb-4">
                                 <div class="card-body">
@@ -346,8 +390,8 @@
                                 </div>
                             </div>                                                                                                                                                                         
                         </div>
-                        <a class="btn" onclick="edit()" id="teamOutput30"></a>
-                        <!-- <div class="col-lg-7">
+                            <!-- <a class="btn" onclick="edit()" id="teamOutput30"></a> -->
+                            <!-- <div class="col-lg-7">
                             <div class="">
                                 <div class="card-body">
                                     <a class="btn btn-primary" id="delete" onclick="deleteTeam()" hidden>Delete a Team</a>
@@ -355,8 +399,8 @@
                                     <a class="btn btn-primary" id="refresh" onclick="refresh()" hidden>Refresh Teams</a>
                                 </div>
                             </div>
-                        </div> -->
-                        <div class="col-lg-auto">
+                            </div> -->
+                        <div class="col-lg-8">
                             <div class="card mb-2">
                                 <div class="card-body">
                                     <div class="large text-muted" style="text-align: center; font-size: large;">Leaderboard as of <span id="d"></span></div>
@@ -826,85 +870,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <a class="btn btn-primary" href="#top">Back to Top</a>
-                                </div>
-                            </div>
-                        </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                    
                     </div>
-                        <!-- <div class="col-lg-6">
-                            Blog post
-                            <div class="card mb-4">
-                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
-                                <div class="card-body">
-                                    <div class="small text-muted">January 1, 2022</div>
-                                    <h2 class="card-title h4">Post Title</h2>
-                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
-                                    <a class="btn btn-primary" href="#!">Read more →</a>
-                                </div>
-                            </div>
-                        </div> -->
-                    <!-- </div> -->
-                    <!-- Pagination-->
-                    <!-- <nav aria-label="Pagination">
-                        <hr class="my-0" />
-                        <ul class="pagination justify-content-center my-4">
-                            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Newer</a></li>
-                            <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">3</a></li>
-                            <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">15</a></li>
-                            <li class="page-item"><a class="page-link" href="#!">Older</a></li>
-                        </ul>
-                    </nav> -->
-                </div>
-                <!-- Side widgets-->
-                <div class="col-lg-4">
-                    <!-- Categories widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Helpful Tools</div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="https://sportsbook.draftkings.com/leagues/golf/88670577?wpsrc=Organic%20Search&wpaffn=Google&wpkw=https%3A%2F%2Fsportsbook.draftkings.com%2Fleagues%2Fgolf%2F88670577&wpcn=leagues&wpscn=golf%2F88670577" target="_blank">Betting Odds</a></li>
-                                        <li><a href="https://www.theopen.com/" target="_blank">Official Website</a></li>
-                                        <li><a href="https://www.theopen.com/teetimes" target="_blank">Tee Times</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="list-unstyled mb-0">
-                                        <li><a href="https://www.pgatour.com/players.html" target="_blank">List of Golfers</a></li>
-                                        <li><a href="https://www.pgatour.com/fedexcup/official-standings.html" target="_blank">FedEx Cup Standings</a></li>
-                                        <li><a href="https://www.pgatour.com/stats/stat.186.html" target="_blank">World Golf Rankings</a></li>
-                                    </ul>
-                                </div>
+                    <div class="col-auto">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <a class="btn btn-primary" href="#top">Back to Top</a>
                             </div>
                         </div>
                     </div>
-                    <!-- Side widget-->
-                    <div class="card mb-4">
-                        <div class="card-header">Keep in Mind:</div>
-                        <div class="card-body">
-                            <ul>
-                                <li>You can pick up to 5 players</li>
-                                <li>The goal is to maximize your team's earnings</li>
-
-                                <li>The leaderboard will be updated every night at midnight</li>
-                                <li>$10 entry fee per team</li>
-                                <li>1st place team wins 70% of total pot</li>
-                                <li>2nd place team wins 20% of total pot</li>
-                                <li>3rd place team wins 10% of total pot</li>
-                                <li>All ties split winnings equally</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
-        </div>
+        </div>        
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Website Created by <span style="font-weight: bold">Maxwell Sweet</span></p></div>
