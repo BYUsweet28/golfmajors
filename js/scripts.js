@@ -4,7 +4,7 @@ var aiPlayerEarnings = [];
 var aiPlayerPosition = [];
 var aiPlayerScore = [];
 
-for(let iCount = 1; iCount < 76; iCount++)
+for(let iCount = 1; iCount < 80; iCount++)
 {
     aiPlayerEarnings[iCount] = document.getElementById("earnings" + iCount).innerHTML;
     localStorage.setItem("earnings" + iCount, aiPlayerEarnings[iCount]);
