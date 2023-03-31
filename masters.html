@@ -1,7 +1,1114 @@
-<link href="css/styles.css" rel="stylesheet" />
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>The Masters</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
 
-This tournament has ended. Go back to the homepage and select another tournament.
+        <script src="https://cdn.jsdelivr.net/npm/vue@2?n=1"></script>
 
-<br><br>
+        <script>
 
-<a class="btn btn-primary" id="return" href="index.html">Return to Homepage</a>
+            document.addEventListener("DOMContentLoaded", function () {
+                new Vue({
+
+                    el: "#form",
+                    data: {
+                        leaderboard : [],
+                        deliveryFeeCounter : 0
+                    },
+                    methods: {
+
+                        playerStats()
+                        {                                                       
+                            var aiPlayerEarnings = [];
+                            var aiPlayerPosition = [];
+                            var aiPlayerScore = [];
+
+                            for(let iCount = 1; iCount < 80; iCount++)
+                            {
+                                aiPlayerEarnings[iCount] = document.getElementById("earnings" + iCount).innerHTML;
+                                localStorage.setItem("earnings" + iCount, aiPlayerEarnings[iCount]);
+                                aiPlayerPosition[iCount] = document.getElementById("golfer" + iCount).innerHTML;
+                                aiPlayerScore[iCount] = document.getElementById("score" + iCount).innerHTML;
+                            }
+                        },
+
+                        getLeaderboard: async function () 
+                        {
+                            try {
+
+                                //Request the data from the API
+                                const options = {
+                                    method: 'GET',
+                                    headers: {
+                                        'X-RapidAPI-Key': 'f1b03e4d97mshb8a45884ad8e8a2p1ce2dajsn5be73edaa2b3',
+                                        'X-RapidAPI-Host': 'golf-leaderboard-data.p.rapidapi.com'
+                                    }
+                                };
+
+                                await fetch('https://golf-leaderboard-data.p.rapidapi.com/leaderboard/25', options)
+                                    .then(response => response.json())
+                                    .then(response => this.leaderboard = response.results.leaderboard)
+                                    .then(response => console.log(this.leaderboard))
+                                    .catch(err => console.error(err));
+                                    console.log(this.leaderboard[0].first_name);
+                            }
+
+                            catch (err) {
+                            console.log(err);
+                            }
+
+                            this.insRows();
+                        },
+
+                        insRows() 
+                        {
+                            let score1 = 0;
+                            for(let iCount2 = 0; iCount2 < this.leaderboard[0].rounds.length; iCount2++)
+                            {
+                                score1 += this.leaderboard[0].rounds[iCount2].total_to_par;
+                            }
+                            document.getElementById('score').innerHTML = score1;
+                            document.getElementById('golfer').innerHTML = this.leaderboard[0].first_name + ' ' + this.leaderboard[0].last_name;
+
+                            for(let iCount = 1; iCount < this.leaderboard.length; iCount++)
+                            {
+                                var x = document.getElementById('leaderboardTable');
+                                var new_row = x.rows[1].cloneNode(true);
+                                var len = x.rows.length;
+                                new_row.cells[0].innerHTML = len;
+
+                                var col1 = new_row.cells[1];
+                                col1.id += (len -1);
+                                let score = 0;
+                                for(iCount2 = 0; iCount2 < this.leaderboard[iCount].rounds.length; iCount2++)
+                                {
+                                    score += this.leaderboard[iCount].rounds[iCount2].total_to_par;
+                                }
+                                col1.innerHTML = score;
+
+                                var col2 = new_row.cells[2];
+                                col2.id += (len - 1);
+                                col2.innerHTML = this.leaderboard[iCount].first_name + ' ' + this.leaderboard[iCount].last_name;
+                                x.appendChild(new_row);
+
+                                var col3 = new_row.cells[3];
+                                col3.id += (len - 1);
+                                if(this.leaderboard[iCount].prize_money != "")
+                                {
+                                    col3.innerHTML = this.leaderboard[iCount].prize_money;
+                                }
+                                x.appendChild(new_row);
+                            }
+
+                            this.playerStats();
+                        },
+
+                        // refresh()
+                        // {
+                        //     for(let iCount2 = 1; iCount2 < 30; iCount2++)
+                        //     {
+                        //             var sNameLength = parseInt(document.getElementById("teamOutput" + iCount2).innerHTML.indexOf(":"));
+                        //             var sTeamOwner = document.getElementById("teamOutput" + iCount2).innerHTML.slice(0,sNameLength + 1);
+                        //             var sPlayerName = [];
+                        //             var sOutput = sTeamOwner + " <br><br>" ;
+                        //             var aiTeamPosition = [];
+                        //             var aiTeamEarnings = [];
+                        //             var iSum = 0;
+                            
+                        //                     for(let iCount = 0; iCount < 5; iCount++)
+                        //                     {
+                        //                         if(iCount == 4)
+                        //                         {
+                        //                             var sPlayerNameStart = ((document.getElementById("teamOutput" + iCount2).innerHTML.lastIndexOf(iCount + 1)) + 3);
+                        //                             var sNextPlayer = (document.getElementById("teamOutput" + iCount2).innerHTML.indexOf("$")) - 37;
+                        //                             sPlayerName[iCount] = document.getElementById("teamOutput" + iCount2).innerHTML.slice(sPlayerNameStart,sNextPlayer);
+                        //                             sOutput += (iCount + 1) + ". " + sPlayerName[iCount] + "<br>";
+                        //                         }
+                        //                         else
+                        //                         {
+                        //                             var sPlayerNameStart = ((document.getElementById("teamOutput" + iCount2).innerHTML.lastIndexOf(iCount + 1)) + 3);
+                        //                             var sNextPlayer = ((document.getElementById("teamOutput" + iCount2).innerHTML.lastIndexOf(iCount + 2)) - 4);
+                        //                             sPlayerName[iCount] = document.getElementById("teamOutput" + iCount2).innerHTML.slice(sPlayerNameStart,sNextPlayer);
+                        //                             sOutput += (iCount + 1) + ". " + sPlayerName[iCount] + "<br>";
+                        //                         }
+                                
+                        //                         if(aiPlayerPosition.indexOf(sPlayerName[iCount]) == -1)
+                        //                         {
+                        //                             iSum += 7000
+                        //                         }
+                        //                         else
+                        //                         {
+                        //                             aiTeamPosition[iCount] = parseInt(aiPlayerPosition.indexOf(sPlayerName[iCount]));
+                        //                             aiTeamEarnings[iCount] = parseInt(document.getElementById("earnings" + aiTeamPosition[iCount]).innerHTML.replace(",","").replace(",",""));
+                        //                             iSum += aiTeamEarnings[iCount];
+                        //                         } 
+                        //                     }
+                        //         sOutput += "<br>Projected Team Earnings: $" + iSum.toLocaleString("en-US");
+                        //         // console.log(sOutput);
+                        //         document.getElementById("teamOutput" + iCount2).innerHTML = sOutput;
+                        //         // localStorage.setItem("team" + iCount2, sOutput);
+                        //     }
+
+                        //     let aiTotalEarnings = [];
+                        //     for(let iCounter = 1; iCounter < 30; iCounter++)
+                        //     {
+                        //         let iEarningsStart = (document.getElementById("teamOutput" + iCounter).innerHTML.indexOf("$")) + 1;
+                        //         let iEarningsEnd = document.getElementById("teamOutput" + iCounter).innerHTML.length;
+                        //         aiTotalEarnings[iCounter] = parseInt(document.getElementById("teamOutput" + iCounter).innerHTML.slice(iEarningsStart, iEarningsEnd).replace(",","").replace(",",""));
+                        //     }
+                            
+                        //     let sHoldTeamName = "";
+                        //     let iHoldTeamAmount = 0;
+                            
+                        //     for (let iOuter = 1; iOuter < aiTotalEarnings.length - 1; iOuter++)
+                        //     {
+                        //         // console.log(aiTotalEarnings[iOuter]);
+                        //         for (let iInner = iOuter + 1; iInner < aiTotalEarnings.length; iInner++)
+                        //         {
+                        //             // console.log(aiTotalEarnings[iInner]);
+                        //             if (aiTotalEarnings[iOuter] < aiTotalEarnings[iInner])
+                        //             {
+                        //                 sHoldTeamName = document.getElementById("teamOutput" + iOuter).innerHTML;
+                        //                 iHoldTeamAmount = aiTotalEarnings[iOuter];
+                            
+                        //                 document.getElementById("teamOutput" + iOuter).innerHTML = document.getElementById("teamOutput" + iInner).innerHTML;
+                        //                 aiTotalEarnings[iOuter] = aiTotalEarnings[iInner];
+                            
+                        //                 document.getElementById("teamOutput" + iInner).innerHTML = sHoldTeamName;
+                        //                 aiTotalEarnings[iInner] = iHoldTeamAmount;
+                        //             }
+                        //         }
+                        //     } 
+                        // },
+
+                        date()
+                        {
+                            var n =  new Date();
+                            var y = n.getFullYear();
+                            var m = n.getMonth() + 1;
+                            var d = n.getDate() - 1;
+                            document.getElementById("d").innerHTML = m + "/" + d + "/" + y;
+                        }
+                    },
+
+                    computed: {}, 
+                    mounted(){
+                        this.getLeaderboard();
+                        // this.refresh();
+                        this.date();
+                    }
+                })
+            })
+        </script>
+    </head>
+    <body onload="">
+        <!-- Responsive navbar-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <a class="navbar-brand" href="/">Major Golf Championships</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" href="/masters">The Masters</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/tournament">PGA Tour Championship</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="/tournament">The U.S. Open</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/tournament">The Open</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Page header with logo and tagline-->
+        <header class="py-5 bg-light border-bottom mb-4">
+            <div class="container">
+                <div class="text-center my-5">
+                    <a id="top"></a>
+                    <h1 class="fw-bolder" >The 2023 Masters Championship</h1>
+                    <br>
+                    <p class="lead mb-0">Augusta National Golf Course</p>
+                    <br>
+                    <a href="#!"><img class="card-img-top" src="images/augusta.jpg" alt="..." /></a>
+                </div>    
+            </div>
+        </header>
+        <!-- Page content-->
+        <div class="container-xxl">
+            <div class="row">
+                <!-- Blog entries-->
+                <div class="col-lg-8">
+                    <!-- Featured blog post-->
+                    <div class="card mb-4">
+                        <a href="#!"><img class="card-img-top" src="images/masterswinner.jpg" alt="..." /></a>
+                        <div class="card-body">
+                            <h2 class="card-title">Who Do You Think Will Win?</h2>
+                            <div class="small text-muted">Picks due by 11:59 PM on Wednesday July 13th.</div>
+                            <p class="card-text">Check team standings below:</p>
+                            <a class="btn btn-primary" onclick="teams()" hidden>Begin here</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Categories widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Helpful Tools</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="https://sportsbook.draftkings.com/leagues/golf/us-masters" target="_blank">Betting Odds</a></li>
+                                        <li><a href="https://www.masters.com/" target="_blank">Official Website</a></li>
+                                        <li><a href="https://www.masters.com/en_US/players/pairings/" target="_blank">Tee Times</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a href="https://www.pgatour.com/players.html" target="_blank">List of PGA Golfers</a></li>
+                                        <li><a href="https://www.livgolf.com/players-directory" target="_blank">List of LIV Golfers</a></li>
+                                        <li><a href="https://www.pgatour.com/stats/stat.186.html" target="_blank">World Golf Rankings</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Side widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Keep in Mind:</div>
+                        <div class="card-body">
+                            <ul>
+                                <li>You can pick up to 5 players</li>
+                                <li>The goal is to maximize your team's earnings</li>
+
+                                <li>The leaderboard will be updated every night at midnight</li>
+                                <li>$10 entry fee per team</li>
+                                <li>1st place team wins 70% of total pot</li>
+                                <li>2nd place team wins 20% of total pot</li>
+                                <li>3rd place team wins 10% of total pot</li>
+                                <li>All ties split winnings equally</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                    <!-- Nested row for non-featured blog posts-->
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">1st Place</div>
+                                    <p class="card-text" id="teamOutput1">
+                                        Max Sweet's Picks: <br><br>1. Schauffele<br>2. Cantlay<br>3. Rahm<br>4. Zalatoris<br>5. C. Smith<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">2nd Place</div>
+                                    <p class="card-text" id="teamOutput2">
+                                        C. Ferguson (1)'s Picks: <br><br>1. Cantlay<br>2. Finau<br>3. Fleetwood<br>4. Kitayama<br>5. Morikawa<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">3rd Place</div>
+                                    <p class="card-text" id="teamOutput3">
+                                        C. Ferguson (2)'s Picks: <br><br>1. Schauffele<br>2. Scheffler<br>3. C. Smith<br>4. Spieth<br>5. Thomas<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">4th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput4">
+                                        C. Ferguson (3)'s Picks: <br><br>1. Woods<br>2. Fitzpatrick<br>3. McIlroy<br>4. Rahm<br>5. Niemann<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">5th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput5">
+                                        M. Raeder (1)'s Picks: <br><br>1. Thomas<br>2. Zalatoris<br>3. McIlroy<br>4. Spieth<br>5. Schauffele<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">6th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput6">
+                                        M. Raeder (2)'s Picks: <br><br>1. Scheffler<br>2. Zalatoris<br>3. McIlroy<br>4. Spieth<br>5. Schauffele<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">7th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput7">
+                                        M. Raeder (3)'s Picks: <br><br>1. Scheffler<br>2. Fitzpatrick<br>3. McIlroy<br>4. Spieth<br>5. Schauffele<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">8th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput8">
+                                        M. Raeder (4)'s Picks: <br><br>1. Schauffele<br>2. Spieth<br>3. McIlroy<br>4. Morikawa<br>5. C. Smith<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>    
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">9th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput9">
+                                        M. Raeder (5)'s Picks: <br><br>1. McIlroy<br>2. Schauffele<br>3. Thomas<br>4. Zalatoris<br>5. C. Smith<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">10th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput10">
+                                        O. Raeder's Picks: <br><br>1. McIlroy<br>2. Spieth<br>3. Schauffele<br>4. Morikawa<br>5. Fitzpatrick<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">11th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput11">
+                                        Helen Raeder's Picks: <br><br>1. McIlroy<br>2. Spieth<br>3. Schauffele<br>4. Fitzpatrick<br>5. Scheffler<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">12th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput12">
+                                        L. Raeder's Picks: <br><br>1. McIlroy<br>2. Spieth<br>3. Schauffele<br>4. Fitzpatrick<br>5. Zalatoris<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">13th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput13">
+                                        Holly Raeder's Picks: <br><br>1. McIlroy<br>2. Spieth<br>3. Schauffele<br>4. Fitzpatrick<br>5. Lowry<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">14th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput14">
+                                        R. Adams (1)'s Picks: <br><br>1. McIlroy<br>2. Rahm<br>3. Spieth<br>4. Thomas<br>5. Zalatoris<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">15th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput15">
+                                        R. Adams (2)'s Picks: <br><br>1. Schauffele<br>2. Scheffler<br>3. Fitzpatrick<br>4. Lowry<br>5. C. Smith<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">16th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput16">
+                                        L. Cochran's Picks: <br><br>1. McIlroy<br>2. Scheffler<br>3. Rahm<br>4. Hovland<br>5. Zalatoris<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">17th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput17">
+                                        C. Smith's Picks: <br><br>1. McIlroy<br>2. D. Johnson<br>3. Rahm<br>4. Lowry<br>5. Thomas<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">18th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput18">
+                                        Mike Sweet's Picks: <br><br>1. McIlroy<br>2. Fitzpatrick<br>3. Rahm<br>4. Schauffele<br>5. Finau<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">19th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput19">
+                                        R. Loftis's Picks: <br><br>1. McIlroy<br>2. Homa<br>3. Cantlay<br>4. Zalatoris<br>5. Lowry<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">20th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput20">
+                                        K. Markwardt's Picks: <br><br>1. McIlroy<br>2. Spieth<br>3. Rahm<br>4. Fitzpatrick<br>5. Schauffele<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>          
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">21st Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput21">
+                                        D. Ennenga's Picks: <br><br>1. Matsuyama<br>2. Im<br>3. Na<br>4. K.H. Lee<br>5. Morikawa<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>      
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">22nd Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput22">
+                                        C. Puempel's Picks: <br><br>1. McIlroy<br>2. Schauffele<br>3. Rahm<br>4. Zalatoris<br>5. Morikawa<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>     
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">23rd Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput23">
+                                        T. Ferguson's Picks: <br><br>1. Spieth<br>2. Cantlay<br>3. Hatton<br>4. Fitzpatrick<br>5. C. Smith<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>       
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">24th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput24">
+                                        T. Johnson's Picks: <br><br>1. McIlroy<br>2. Fleetwood<br>3. Spieth<br>4. Woods<br>5. Fitzpatrick<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>      
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">25th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput25">
+                                        O. Puempel's Picks: <br><br>1. Schauffele<br>2. Matsuyama<br>3. Rahm<br>4. McIlroy<br>5. Zalatoris<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>     
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">26th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput26">
+                                        M. Maples's Picks: <br><br>1. McIlroy<br>2. Schauffele<br>3. Matsuyama<br>4. Fitzpatrick<br>5. Spieth<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>    
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">27th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput27">
+                                        T. Blackwell's Picks: <br><br>1. Spieth<br>2. McIlroy<br>3. Schauffele<br>4. Zalatoris<br>5. C. Smith<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>  
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">28th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput28">
+                                        D. Pino's Picks: <br><br>1. Thomas<br>2. McIlroy<br>3. Schauffele<br>4. Zalatoris<br>5. C. Smith<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>    
+                            <!-- Blog post-->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="small text-muted">29th Place</div>
+                                    <h2 class="card-title h4"></h2>
+                                    <p class="card-text" id="teamOutput29">
+                                        J. Sweet's Picks: <br><br>1. Scheffler<br>2. McIlroy<br>3. Rahm<br>4. Cantlay<br>5. Schauffele<br><br><br>Projected Team Earnings: $
+                                    </p>
+                                </div>
+                            </div>                                                                                                                                                                         
+                        </div>
+                            <!-- <a class="btn" onclick="edit()" id="teamOutput30"></a> -->
+                            <!-- <div class="col-lg-7">
+                            <div class="">
+                                <div class="card-body">
+                                    <a class="btn btn-primary" id="delete" onclick="deleteTeam()" hidden>Delete a Team</a>
+                                    <a class="btn btn-primary" id="edit" onclick="edit()" hidden>Edit a Team</a>
+                                    <a class="btn btn-primary" id="refresh" onclick="refresh()" hidden>Refresh Teams</a>
+                                </div>
+                            </div>
+                            </div> -->
+                        <div class="col-lg-8">
+                            <div class="card mb-2">
+                                <div class="card-body">
+                                    <div class="large text-muted" style="text-align: center; font-size: large;">Leaderboard as of <span id="d"></span></div>
+                                    <table id="leaderboardTable">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 25%;text-align:left">Position</th>
+                                                <th style="width: 25%;text-align:left">Score</th>
+                                                <th style="width: 60%;text-align:left">Golfer Name</th>
+                                                <th style="width: 50%;text-align:left">Projected Earnings (in $)</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr >
+                                                <td>1</td>
+                                                <td id="score">-20</td>
+                                                <td id="golfer">C. Smith</td>
+                                                <td id="earnings">2,500,000</td>
+                                            </tr>
+                                            <!-- <tr>
+                                                <td>2</td>
+                                                <td id="score2">-19</td>
+                                                <td id="golfer2">Young</td>
+                                                <td id="earnings2">1,455,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>3</td>
+                                                <td id="score3">-18</td>
+                                                <td id="golfer3">McIlroy</td>
+                                                <td id="earnings3">933,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>4</td>
+                                                <td id="score4">-14</td>
+                                                <td id="golfer4">Fleetwood</td>
+                                                <td id="earnings4">654,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>5</td>
+                                                <td id="score5">-14</td>
+                                                <td id="golfer5">Hovland</td>
+                                                <td id="earnings5">654,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>6</td>
+                                                <td id="score6">-13</td>
+                                                <td id="golfer6">Harman</td>
+                                                <td id="earnings6">469,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>7</td>
+                                                <td id="score7">-13</td>
+                                                <td id="golfer7">Johnson</td>
+                                                <td id="earnings7">469,500</td>
+                                            </tr>
+                                            <tr>
+                                                <td>8</td>
+                                                <td id="score8">-12</td>
+                                                <td id="golfer8">Cantlay</td>
+                                                <td id="earnings8">325,666</td>
+                                            </tr>
+                                            <tr>
+                                                <td>9</td>
+                                                <td id="score9">-12</td>
+                                                <td id="golfer9">Spieth</td>
+                                                <td id="earnings9">325,666</td>
+                                            </tr>
+                                            <tr>
+                                                <td>10</td>
+                                                <td id="score10">-12</td>
+                                                <td id="golfer10">DeChambeau</td>
+                                                <td id="earnings10">325,666</td>
+                                            </tr>
+                                            <tr>
+                                                <td>11</td>
+                                                <td id="score11">-11</td>
+                                                <td id="golfer11">Kaewkanjana</td>
+                                                <td id="earnings11">231,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>12</td>
+                                                <td id="score12">-11</td>
+                                                <td id="golfer12">Ancer</td>
+                                                <td id="earnings12">231,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>13</td>
+                                                <td id="score13">-11</td>
+                                                <td id="golfer13">Burmester</td>
+                                                <td id="earnings13">231,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>14</td>
+                                                <td id="score14">-11</td>
+                                                <td id="golfer14">Hatton</td>
+                                                <td id="earnings14">231,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>15</td>
+                                                <td id="score15">-10</td>
+                                                <td id="golfer15">Herbert</td>
+                                                <td id="earnings15">165,583</td>
+                                            </tr>
+                                            <tr>
+                                                <td>16</td>
+                                                <td id="score16">-10</td>
+                                                <td id="golfer16">Schauffele</td>
+                                                <td id="earnings16">165,583</td>
+                                            </tr>
+                                            <tr>
+                                                <td>17</td>
+                                                <td id="score17">-10</td>
+                                                <td id="golfer17">Quayle</td>
+                                                <td id="earnings17">165,583</td>
+                                            </tr>
+                                            <tr>
+                                                <td>18</td>
+                                                <td id="score18">-10</td>
+                                                <td id="golfer18">Molinari</td>
+                                                <td id="earnings18">165,583</td>
+                                            </tr>
+                                            <tr>
+                                                <td>19</td>
+                                                <td id="score19">-10</td>
+                                                <td id="golfer19">Scott</td>
+                                                <td id="earnings19">165,583</td>
+                                            </tr>
+                                            <tr>
+                                                <td>20</td>
+                                                <td id="score20">-10</td>
+                                                <td id="golfer20">Kim</td>
+                                                <td id="earnings20">165,583</td>
+                                            </tr>
+                                            <tr>
+                                                <td>21</td>
+                                                <td id="score21">-9</td>
+                                                <td id="golfer21">Horschel</td>
+                                                <td id="earnings21">120,300</td>
+                                            </tr>
+                                            <tr>
+                                                <td>22</td>
+                                                <td id="score22">-9</td>
+                                                <td id="golfer22">M. Lee</td>
+                                                <td id="earnings22">120,300</td>
+                                            </tr>
+                                            <tr>
+                                                <td>23</td>
+                                                <td id="score23">-9</td>
+                                                <td id="golfer23">Mullinax</td>
+                                                <td id="earnings23">120,300</td>
+                                            </tr>
+                                            <tr>
+                                                <td>24</td>
+                                                <td id="score24">-9</td>
+                                                <td id="golfer24">Lowry</td>
+                                                <td id="earnings24">120,300</td>
+                                            </tr>
+                                            <tr>
+                                                <td>25</td>
+                                                <td id="score25">-9</td>
+                                                <td id="golfer25">Kisner</td>
+                                                <td id="earnings25">120,300</td>
+                                            </tr>
+                                            <tr>
+                                                <td>26</td>
+                                                <td id="score26">-9</td>
+                                                <td id="golfer26">Fitzpatrick</td>
+                                                <td id="earnings26">120,300</td>
+                                            </tr>
+                                            <tr>
+                                                <td>27</td>
+                                                <td id="score27">-9</td>
+                                                <td id="golfer27">Scheffler</td>
+                                                <td id="earnings27">120,300</td>
+                                            </tr>
+                                            <tr>
+                                                <td>28</td>
+                                                <td id="score28">-8</td>
+                                                <td id="golfer28">Finau</td>
+                                                <td id="earnings28">90,916</td>
+                                            </tr>
+                                            <tr>
+                                                <td>29</td>
+                                                <td id="score29">-8</td>
+                                                <td id="golfer29">Conners</td>
+                                                <td id="earnings29">90,916</td>
+                                            </tr>
+                                            <tr>
+                                                <td>30</td>
+                                                <td id="score30">-8</td>
+                                                <td id="golfer30">Varner III</td>
+                                                <td id="earnings30">90,916</td>
+                                            </tr>
+                                            <tr>
+                                                <td>31</td>
+                                                <td id="score31">-8</td>
+                                                <td id="golfer31">Zalatoris</td>
+                                                <td id="earnings31">90,916</td>
+                                            </tr>
+                                            <tr>
+                                                <td>32</td>
+                                                <td id="score32">-8</td>
+                                                <td id="golfer32">Fritelli</td>
+                                                <td id="earnings32">90,916</td>
+                                            </tr>
+                                            <tr>
+                                                <td>33</td>
+                                                <td id="score33">-8</td>
+                                                <td id="golfer33">Pieters</td>
+                                                <td id="earnings33">90,916</td>
+                                            </tr>
+                                            <tr>
+                                                <td>34</td>
+                                                <td id="score34">-7</td>
+                                                <td id="golfer34">Detry</td>
+                                                <td id="earnings34">68,906</td>
+                                            </tr>
+                                            <tr>
+                                                <td>35</td>
+                                                <td id="score35">-7</td>
+                                                <td id="golfer35">MacIntyre</td>
+                                                <td id="earnings35">68,906</td>
+                                            </tr>
+                                            <tr>
+                                                <td>36</td>
+                                                <td id="score36">-7</td>
+                                                <td id="golfer36">Gooch</td>
+                                                <td id="earnings36">68,906</td>
+                                            </tr>
+                                            <tr>
+                                                <td>37</td>
+                                                <td id="score37">-7</td>
+                                                <td id="golfer37">Westwood</td>
+                                                <td id="earnings37">68,906</td>
+                                            </tr>
+                                            <tr>
+                                                <td>38</td>
+                                                <td id="score38">-7</td>
+                                                <td id="golfer38">Theegala</td>
+                                                <td id="earnings38">68,906</td>
+                                            </tr>
+                                            <tr>
+                                                <td>39</td>
+                                                <td id="score39">-7</td>
+                                                <td id="golfer39">Rahm</td>
+                                                <td id="earnings39">68,906</td>
+                                            </tr>
+                                            <tr>
+                                                <td>40</td>
+                                                <td id="score40">-7</td>
+                                                <td id="golfer40">Perez</td>
+                                                <td id="earnings40">68,906</td>
+                                            </tr>
+                                            <tr>
+                                                <td>41</td>
+                                                <td id="score41">-7</td>
+                                                <td id="golfer41">Wise</td>
+                                                <td id="earnings41">68,906</td>
+                                            </tr>
+                                            <tr>
+                                                <td>42</td>
+                                                <td id="score42">-6</td>
+                                                <td id="golfer42">Burns</td>
+                                                <td  id="earnings42">51,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>43</td>
+                                                <td id="score43">-6</td>
+                                                <td id="golfer43">Kokrak</td>
+                                                <td id="earnings43">51,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>44</td>
+                                                <td id="score44">-6</td>
+                                                <td id="golfer44">Lawrence</td>
+                                                <td id="earnings44">51,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>45</td>
+                                                <td id="score45">-6</td>
+                                                <td id="golfer45">Meronk</td>
+                                                <td id="earnings45">51,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>46</td>
+                                                <td id="score46">-6</td>
+                                                <td id="golfer46">Kirk</td>
+                                                <td id="earnings46">51,000</td>
+                                            </tr>
+                                            <tr>
+                                                <td>47</td>
+                                                <td id="score47">-5</td>
+                                                <td id="golfer47">Higgo</td>
+                                                <td id="earnings47">40,580</td>
+                                            </tr>
+                                            <tr>
+                                                <td>48</td>
+                                                <td id="score48">-5</td>
+                                                <td id="golfer48">Reed</td>
+                                                <td id="earnings48">40,580</td>
+                                            </tr>
+                                            <tr>
+                                                <td>49</td>
+                                                <td id="score49">-5</td>
+                                                <td id="golfer49">J. Smith</td>
+                                                <td id="earnings49">40,580</td>
+                                            </tr>
+                                            <tr>
+                                                <td>50</td>
+                                                <td id="score50">-5</td>
+                                                <td id="golfer50">Katsuragawa</td>
+                                                <td id="earnings50">40,580</td>
+                                            </tr>
+                                            <tr>
+                                                <td>51</td>
+                                                <td id="score51">-5</td>
+                                                <td id="golfer51">Kim</td>
+                                                <td id="earnings51">40,580</td>
+                                            </tr>
+                                            <tr>
+                                                <td>52</td>
+                                                <td id="score52">-4</td>
+                                                <td id="golfer52">Niemann</td>
+                                                <td id="earnings52">35,655</td>
+                                            </tr>
+                                            <tr>
+                                                <td>53</td>
+                                                <td id="score53">-4</td>
+                                                <td id="golfer53">Willett</td>
+                                                <td id="earnings53">35,655</td>
+                                            </tr>
+                                            <tr>
+                                                <td>54</td>
+                                                <td id="score54">-4</td>
+                                                <td id="golfer54">Dinwiddie</td>
+                                                <td id="earnings54">35,655</td>
+                                            </tr>
+                                            <tr>
+                                                <td>55</td>
+                                                <td id="score55">-4</td>
+                                                <td id="golfer55">Van Meijel</td>
+                                                <td id="earnings55">35,655</td>
+                                            </tr>
+                                            <tr>
+                                                <td>56</td>
+                                                <td id="score56">-4</td>
+                                                <td id="golfer56">Casey</td>
+                                                <td id="earnings56">35,655</td>
+                                            </tr>
+                                            <tr>
+                                                <td>57</td>
+                                                <td id="score57">-4</td>
+                                                <td id="golfer57">Scrivener</td>
+                                                <td id="earnings57">35,655</td>
+                                            </tr>
+                                            <tr>
+                                                <td>58</td>
+                                                <td id="score58">-4</td>
+                                                <td id="golfer58">Kennedy</td>
+                                                <td id="earnings58">35,655</td>
+                                            </tr>
+                                            <tr>
+                                                <td>59</td>
+                                                <td id="score59">-4</td>
+                                                <td id="golfer59">Thomas</td>
+                                                <td id="earnings59">35,655</td>
+                                            </tr>
+                                            <tr>
+                                                <td>60</td>
+                                                <td id="score60">-4</td>
+                                                <td id="golfer60">Hojgaard</td>
+                                                <td id="earnings60">35,655</td>
+                                            </tr>
+                                            <tr>
+                                                <td>61</td>
+                                                <td id="score61">-3</td>
+                                                <td id="golfer61">Tringale</td>
+                                                <td id="earnings61">33,625</td>
+                                            </tr>
+                                            <tr>
+                                                <td>62</td>
+                                                <td id="score62">-3</td>
+                                                <td id="golfer62">Munoz</td>
+                                                <td id="earnings62">33,625</td>
+                                            </tr>
+                                            <tr>
+                                                <td>63</td>
+                                                <td id="score63">-3</td>
+                                                <td id="golfer63">Parry</td>
+                                                <td id="earnings63">33,625</td>
+                                            </tr>
+                                            <tr>
+                                                <td>64</td>
+                                                <td id="score64">-3</td>
+                                                <td id="golfer64">Carey</td>
+                                                <td id="earnings64">33,625</td>
+                                            </tr>
+                                            <tr>
+                                                <td>65</td>
+                                                <td id="score65">-3</td>
+                                                <td id="golfer65">Poulter</td>
+                                                <td id="earnings65">33,625</td>
+                                            </tr>
+                                            <tr>
+                                                <td>66</td>
+                                                <td id="score66">-3</td>
+                                                <td id="golfer66">Henley</td>
+                                                <td id="earnings66">33,625</td>
+                                            </tr>
+                                            <tr>
+                                                <td>67</td>
+                                                <td id="score67">-2</td>
+                                                <td id="golfer67">Matsuyama</td>
+                                                <td id="earnings67">32,525</td>
+                                            </tr>
+                                            <tr>
+                                                <td>68</td>
+                                                <td id="score68">-2</td>
+                                                <td id="golfer68">Garcia</td>
+                                                <td id="earnings68">32,525</td>
+                                            </tr>
+                                            <tr>
+                                                <td>69</td>
+                                                <td id="score69">-2</td>
+                                                <td id="golfer69">Bezuidenhout</td>
+                                                <td id="earnings69">32,525</td>
+                                            </tr>
+                                            <tr>
+                                                <td>70</td>
+                                                <td id="score70">-2</td>
+                                                <td id="golfer70">Mansell</td>
+                                                <td id="earnings70">32,525</td>
+                                            </tr>
+                                            <tr>
+                                                <td>71</td>
+                                                <td id="score71">-1</td>
+                                                <td id="golfer71">Law</td>
+                                                <td id="earnings71">31,887</td>
+                                            </tr>
+                                            <tr>
+                                                <td>72</td>
+                                                <td id="score72">-1</td>
+                                                <td id="golfer72">Kitayama</td>
+                                                <td id="earnings72">31,887</td>
+                                            </tr>
+                                            <tr>
+                                                <td>73</td>
+                                                <td id="score73">E</td>
+                                                <td id="golfer73">Armitage</td>
+                                                <td id="earnings73">31,637</td>
+                                            </tr>
+                                            <tr>
+                                                <td>74</td>
+                                                <td id="score74">E</td>
+                                                <td id="golfer74">De Los Santos</td>
+                                                <td id="earnings74">31,637</td>
+                                            </tr>
+                                            <tr>
+                                                <td>75</td>
+                                                <td id="score75">+1</td>
+                                                <td id="golfer75">Clark</td>
+                                                <td id="earnings75">31,387</td>
+                                            </tr>
+                                            <tr>
+                                                <td>76</td>
+                                                <td id="score76">+1</td>
+                                                <td id="golfer76">Arnaus</td>
+                                                <td id="earnings76">31,387</td>
+                                            </tr>
+                                            <tr>
+                                                <td>77</td>
+                                                <td id="score77">+2</td>
+                                                <td id="golfer77">Canter</td>
+                                                <td id="earnings77">31,200</td>
+                                            </tr>
+                                            <tr>
+                                                <td>78</td>
+                                                <td id="score78">+4</td>
+                                                <td id="golfer78">Im</td>
+                                                <td id="earnings78">31,075</td>
+                                            </tr>
+                                            <tr>
+                                                <td>79</td>
+                                                <td id="score79">+8</td>
+                                                <td id="golfer79">Rutherford</td>
+                                                <td id="earnings79">30,950</td>
+                                            </tr> -->
+                                        </tbody>
+                                    </table>        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <a class="btn btn-primary" href="#top">Back to Top</a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>        
+        <!-- Footer-->
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Website Created by <span style="font-weight: bold">Maxwell Sweet</span></p></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
